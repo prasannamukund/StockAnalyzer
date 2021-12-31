@@ -14,8 +14,8 @@ import pandas as pd
 import numpy as np
 import csv
 
-def ISIN2Tic (ISIN):
-    f_in = open('t7-xetr-allTradableInstruments.csv', "r")
+def ISIN2Tic (ISIN, ref_file):
+    f_in = open(ref_file, "r")
     reader = csv.reader(f_in)
     for line in reader:
         if line[3] == ISIN:

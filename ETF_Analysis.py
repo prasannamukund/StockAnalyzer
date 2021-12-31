@@ -44,7 +44,7 @@ stock = ['LU2023679090']
 #Constants
 ticker = '^GDAXI'
 period = 365 * 3
-
+ref_file="t7-xetr-allTradableInstruments.csv"
 ref_tradays, ref_returns, ref_vol = sf.Get_RetVol(ticker, period)
 
 df = pd.DataFrame(columns=['Ticker', 'Returns', 'Volatality', 'Incomplete'])
@@ -53,7 +53,7 @@ if (DEBUG):
           'returns:', ref_returns*100, 'Vol:', ref_vol*100)
 
 for i in range(0,len(stock)):
-    ticker = sf.ISIN2Tic(stock[i])+'.DE'
+    ticker = sf.ISIN2Tic(stock[i], ref_file)+'.DE'
     if (DEBUG):
         print (i, stock[i], ticker)
     try:
@@ -90,6 +90,6 @@ fig.add_trace(go.Scatter(x=[ref_returns*100], y=[ref_vol*100],
                          text='DAX40', name='Reference Index',
                          mode='markers', marker=dict(size=30, color='pink')))
 fig.update_layout(title='Risk vs Volatality chart (DKB Aktion ETF analysis)'
-                  '<br><sup>Blue: Complete Yellow: (returns < reference): Red: Data incomplete</sup>',
+                  '<br><sup>Blue: Complete, Yellow: (returns < reference), Red: Data incomplete</sup>',
                   xaxis_title="Returns (%)", yaxis_title="Volatality (%)",)
 fig.show()
