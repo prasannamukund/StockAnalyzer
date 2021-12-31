@@ -43,7 +43,7 @@ stock = ['LU2023679090']
 # Get Reference
 #Constants
 ticker = '^GDAXI'
-period = 365 * 3
+period = 365 * 1
 ref_file="t7-xetr-allTradableInstruments.csv"
 ref_tradays, ref_returns, ref_vol = sf.Get_RetVol(ticker, period)
 
@@ -92,4 +92,11 @@ fig.add_trace(go.Scatter(x=[ref_returns*100], y=[ref_vol*100],
 fig.update_layout(title='Risk vs Volatality chart (DKB Aktion ETF analysis)'
                   '<br><sup>Blue: Complete, Yellow: (returns < reference), Red: Data incomplete</sup>',
                   xaxis_title="Returns (%)", yaxis_title="Volatality (%)",)
+
+'''
+## relavant for sample result genertion
+fig.update_yaxes(range=(-10, 40))
+fig.update_xaxes(range=(-40, 60))
+fig.write_image(".out/SampleResult.svg")
+'''
 fig.show()
