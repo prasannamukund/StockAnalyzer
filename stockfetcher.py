@@ -21,6 +21,13 @@ def ISIN2Tic (ISIN, ref_file):
         if line[3] == ISIN:
             return line[7]
 
+def WKN2Tic (WKN, ref_file):
+    f_in = open(ref_file, "r")
+    reader = csv.reader(f_in)
+    for line in reader:
+        if line[6] == '000'+WKN:
+            return line[7]
+        
 def Get_RetVol (ticker, period):
     # set date range for historical prices
     end_time = date.today()

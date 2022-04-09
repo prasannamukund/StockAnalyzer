@@ -13,8 +13,10 @@ pio.renderers.default = "browser"
 import pandas as pd
 import stockfetcher as sf
 
-DEBUG = 0
+DEBUG = 1
+CodeType = 'WKN'
 #Names of the ETF/Shares as ISIN code
+'''
 stock = ['FR0010655712','FR0010688192','FR0010717090','FR0013284304','LU1602144229',
          'LU1602144575','LU1602144732','LU1602144906','LU1681037864','LU1681038243',
          'LU1681038599','LU1681038672','LU1681038912','LU1681039134','LU1681039563',
@@ -36,14 +38,16 @@ stock = ['FR0010655712','FR0010688192','FR0010717090','FR0013284304','LU16021442
          'LU0488317701','LU0419741177','LU2023678282','LU2023678878','LU2023679090',
          'LU2023679256','LU2023678449','DE000ETF9090','LU2198883410','LU2198882362',
          'LU2195226068','LU2198884491']
-'''
+
 stock = ['LU2023679090']
 '''
+stock = ['A2N390', 'A1JHYT', 'A2ANVN', 'A12DPT', 'A1XBTG', 'ETF024', 'LYX0SL', 
+         'DBX0P8', 'DBX0PN', 'DBX0G2']
 
 # Get Reference
 #Constants
 ticker = '^GDAXI'
-period = 365 * 1
+period = 365 * 3
 ref_file="t7-xetr-allTradableInstruments.csv"
 ref_tradays, ref_returns, ref_vol = sf.Get_RetVol(ticker, period)
 
@@ -53,7 +57,13 @@ if (DEBUG):
           'returns:', ref_returns*100, 'Vol:', ref_vol*100)
 
 for i in range(0,len(stock)):
-    ticker = sf.ISIN2Tic(stock[i], ref_file)+'.DE'
+    if (CodeType == 'ISIN'):
+        ticker = sf.ISIN2Tic(stock[i], ref_file)+'.DE'
+    elif (CodeType == 'WKN'):   
+        ticker = sf.WKN2Tic(stock[i], ref_file)+'.DE'
+    else:
+        ticker = stock[i]+'.DE'
+    
     if (DEBUG):
         print (i, stock[i], ticker)
     try:
